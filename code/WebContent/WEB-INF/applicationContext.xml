@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="  
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd  
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd  
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+       ">  
+ 
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+   <property name="driverClassName">
+    <value>com.mysql.jdbc.Driver</value>
+   </property>
+   <property name="url">
+    <value>jdbc:mysql://localhost:3306/bookstore</value>
+   </property>
+   <property name="username">
+    <value>root</value>
+   </property>
+   <property name="password">
+    <value></value>
+   </property>
+</bean>
+<bean id="sessionFactory"
+   class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+   <property name="dataSource">
+    <ref bean="dataSource" />
+   </property>
+   <!--映射文件 -->
+   <property name="mappingResources">
+    <list>
+     <value>model/User.hbm.xml</value>
+     <value>model/Book.hbm.xml</value>
+     <value>model/Orders.hbm.xml</value>
+     <value>model/Orderdetails.hbm.xml</value>
+    </list>
+   </property>
+   <property name="hibernateProperties">  
+   	<props>
+   		<prop key="hibernate.dialect">  
+   			org.hibernate.dialect.MySQL5Dialect  
+        </prop>  
+        <!-- <prop key="hibernate.show_sql">true</prop>   -->
+        <prop key="hibernate.format_sql">true</prop>  
+        <prop key="hibernate.current_session_context_class">
+        	org.springframework.orm.hibernate4.SpringSessionContext  
+        </prop>  
+        <prop key="hibernate.search.lucene_version">LUCENE_36</prop>  
+        <prop key="hibernate.search.default.directory_provider">  
+        	org.hibernate.search.store.impl.FSDirectoryProvider  
+        </prop>
+   	</props>  
+   </property>   
+</bean>
+ 
+<bean id="transactionManager"  
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager"  
+        p:sessionFactory-ref="sessionFactory" />  
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">  
+        <tx:attributes>  
+            <tx:method name="save*" propagation="REQUIRED" />  
+            <tx:method name="add*" propagation="REQUIRED" />  
+            <tx:method name="create*" propagation="REQUIRED" />  
+            <tx:method name="insert*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="merge*" propagation="REQUIRED" />  
+            <tx:method name="del*" propagation="REQUIRED" />  
+            <tx:method name="remove*" propagation="REQUIRED" />  
+            <tx:method name="put*" propagation="REQUIRED" />  
+            <tx:method name="use*" propagation="REQUIRED" />  
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="count*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="list*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="*" read-only="false" />  
+        </tx:attributes>  
+    </tx:advice>   
+
+<bean id="userDAO" class="dao.UserDAO">
+   <property name="sessionFactory">
+    	<ref bean="sessionFactory" />
+   </property>
+</bean>
+<bean id="bookDAO" class="dao.BookDAO">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory" />
+	</property>
+</bean>
+<bean id="ordersDAO" class="dao.OrdersDAO">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory" />
+	</property>
+</bean>
+<bean id="orderdetailsDAO" class="dao.OrderdetailsDAO">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory" />
+	</property>
+</bean>
+<bean id="userService" class="service.UserService">
+   <property name="userDAO" ref="userDAO" />
+</bean>
+<bean id="bookService" class="service.BookService">
+   <property name="bookDAO" ref="bookDAO" />
+</bean>
+<bean id="ordersService" class="service.OrdersService">
+   <property name="ordersDAO" ref="ordersDAO" />
+</bean>
+<bean id="orderdetailsService" class="service.OrderdetailsService">
+   <property name="orderdetailsDAO" ref="orderdetailsDAO" />
+</bean>
+<bean id="loginAction" class="action.Login" scope="prototype">
+   <property name="userService" ref="userService" />
+</bean>
+<bean id="editUserAction" class="action.EditUser" scope="prototype">
+   <property name="userService" ref="userService" />
+</bean>
+<bean id="editBookAction" class="action.EditBook" scope="prototype">
+   <property name="bookService" ref="bookService" />
+</bean>
+<bean id="orderAction" class="action.Order" scope="prototype">
+   <property name="ordersService" ref="ordersService" />
+   <property name="orderdetailsService" ref="orderdetailsService" />
+   <property name="userService" ref="userService" />
+
+</bean>
+<bean id="buyBookAction" class="action.BuyBook" scope="prototype">
+   <property name="ordersService" ref="ordersService" />
+   <property name="orderdetailsService" ref="orderdetailsService" />
+   <property name="bookService" ref="bookService" />
+
+</bean>
+<bean id="viewOrdersAction" class="action.ViewOrders" scope="prototype">
+   <property name="orderdetailsService" ref="orderdetailsService" />
+
+</bean>
+
+
+
+
+<bean id="jsonUserAction" class="action.JsonUser" scope="prototype">
+   <property name="userService" ref="userService" />
+</bean>
+<bean id="jsonBookAction" class="action.JsonBook" scope="prototype">
+   <property name="bookService" ref="bookService" />
+</bean>
+<bean id="jsonOrdersAction" class="action.JsonOrders" scope="prototype">
+   <property name="ordersService" ref="ordersService" />
+   <property name="userService" ref="userService" />
+</bean>
+
+
+
+</beans>

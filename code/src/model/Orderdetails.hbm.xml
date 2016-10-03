@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-5-25 23:12:04 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="model.Orderdetails" table="orderdetails" catalog="bookstore">
+        <id name="odid" type="java.lang.Integer">
+            <column name="odid" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="book" class="model.Book" fetch="select" lazy="false">
+            <column name="ISBN" length="30" />
+        </many-to-one>
+        <many-to-one name="orders" class="model.Orders" fetch="select">
+            <column name="oid" />
+        </many-to-one>
+        <property name="count" type="java.lang.Integer">
+            <column name="count" />
+        </property>
+        <property name="unitPrice" type="java.lang.Double">
+            <column name="unit_price" precision="12" />
+        </property>
+
+
+    </class>
+</hibernate-mapping>

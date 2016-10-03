@@ -1,0 +1,35 @@
+Before modifications
+
+Name 'X' must match pattern 'X' 20
+Missing a Javadoc comment 43
+Line is long than 100 characters 12
+Line contains a tab character 1034
+Import statement for 'X' is in wrong order 52
+First sentence of Javadoc is incomplete 9
+Empty else block 1
+Comment has incorrect indentation level 10
+Block comment has incorrect indentation level 2
+Abbreviation in name 'X' must contain no more than  1 capital letters
+'X' should be separated from previous statement 27
+'X' is not preceded with whitespace 126
+'X' is not followed by whitespace. 110
+'X' have incorrect indentation level X 601
+'X' construct must use '{}'s
+'X' child have incorrect indentation level X
+'X' at column X should be on the same line as  the next part of a multi-block statement
+'X' at column X should be on previous line
+
+
+After modifications
+
+
+Name 'X' must match pattern 'X' 20
+Line contains a tab character 1034
+Import statement for 'X' is in wrong order 52
+Comment has incorrect indentation level 10
+Block comment has incorrect indentation level 2
+'X' is not preceded with whitespace 126
+'X' is not followed by whitespace. 110
+'X' have incorrect indentation level X 601
+'X' child have incorrect indentation level X
+

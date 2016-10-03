@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-5-25 23:12:04 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="model.User" table="user" catalog="bookstore">
+        <id name="uid" type="java.lang.Integer">
+            <column name="uid" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="15" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="15"  not-null="true"/>
+        </property>
+        <property name="root" type="string">
+            <column name="root" length="1" not-null="true" />
+        </property>
+        <property name="alive" type="java.lang.Boolean">
+            <column name="alive" not-null="true"/>
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <property name="nickname" type="string">
+            <column name="nickname"  />
+        </property>
+        <set name="orderses" table="orders" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="uid" />
+            </key>
+            <one-to-many class="model.Orders" />
+        </set>
+
+    </class>
+</hibernate-mapping>
