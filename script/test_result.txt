@@ -1,0 +1,29 @@
+TEST LOGIN IN
+login test passed
+
+DB TEST_CASE1:
+add a new item into database
+DB test1 passed
+
+DB TEST_CASE2:
+Add a new item into database again
+It should be fail due to dupilicated primary key.
+DB test2 passed
+
+DB TEST_CASE3:
+Find the one we added, one item are expected to be found.
+DB test3 passed
+
+DB TEST_CASE4:
+Delete the one we found
+DB test4 passed
+
+DB TEST_CASE5:
+Find the one we added again,
+No item should be found as we have deleted such item
+DB test5 passed
+
+DB TEST_CASE6:
+Delete the one we added again
+It should be failed as it doesn't exist in database
+DB test6 passed

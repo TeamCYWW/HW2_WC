@@ -206,7 +206,7 @@ public class EditBookAction extends ActionSupport{
 				"failed/Cannot find the specific item");  	        	
 	        }else{
 		        session.put("sqlsen",sqlsen);
-				ServletActionContext.getResponse().getWriter().print("success/");  
+				ServletActionContext.getResponse().getWriter().print("success/ find " +  bookService.getBookCounts(sqlsen) + " item(s)");  
 		        //System.out.println(sqlsen);
 	        }
         	}

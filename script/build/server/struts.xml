@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  <!DOCTYPE struts PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+      "http://struts.apache.org/dtds/struts-2.0.dtd">
+  <struts>
+      <package name="ServletDB" namespace="/"
+       extends="struts-default" >
+          <action name="login" class="action.LoginAction">
+              <result name="root">/A_Book.jsp</result>
+              <result name="user">/U_Book.jsp</result>
+              <result name="failed">/index.jsp</result>
+          </action>
+          <action name="logout" class="action.LogoutAction">
+              <result name="success">/index.jsp</result>
+          </action>
+          <action name="jsonBook" class="action.JsonBookAction">
+               <result name="failed">/index.jsp</result>
+        </action>   
+        <action name="editBook" class="action.EditBookAction">
+               <result name="failed">/index.jsp</result>
+        </action>
+      </package>
+
+  </struts>
